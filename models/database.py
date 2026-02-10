@@ -1,10 +1,28 @@
 from sqlite3 import Connection, connect, Cursor
 from types import TracebackType
 from typing import Any, Optional, Self, Type
+from dotenv import load_dotenv
 import traceback
+import os
 
-class Database:
-    def __init__(self, db_name: str) -> None :
+load_dotenv() # Procura um arquivo .env com variáveis
+DB_PATH = os.getenv('DATABASE', './data/tarefas.sqlite3')
+
+def init_db(db_name: str = DB_PATH) -> None:
+    with connect(db_name) as conn:
+        conn.execute("""
+        CREATE TABLE IF NOT EXISTS tarefas (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            titulo_tarefa TEXT NOT NULL,
+            data_conclusao TEXT
+        );
+        """)
+
+class Database: 
+    """
+        Classe que gerencia conexões e oprerações com um banco de dados SQLite. Utiliza o protocolo de gerenciamento de contexto para garantit que a conexão seja encerrada corretamente.
+    """
+    def __init__(self, db_name: str = DB_PATH) -> None :
         self.connection: Connection = connect(db_name)
         self.cursor: Cursor = self.connection.cursor()
         self.executar('''
@@ -26,14 +44,14 @@ class Database:
     def close(self) -> None:
         self.connection.close()
 
-    # Métodos para o gerenciamento de contexto
-
-    #Método de entrada do contexto 
     def __enter__(self) -> Self:
         return self
 
-    # Método de saída do contexto 
-    def __exit__(self, exc_type: Optional[Type[BaseException]], exc_value: Optional[BaseException], tb: Optional[TracebackType]) -> None:
+    def __exit__(
+            self, 
+            exc_type: Optional[Type[BaseException]], 
+            exc_value: Optional[BaseException], 
+            tb: Optional[TracebackType]) -> None:
 
         if exc_type is not None:
             print('Execeção capturada no contexto:')
@@ -43,19 +61,3 @@ class Database:
             traceback.print_tb(tb)
 
         self.close()
-
-
-# # Área de Testes
-# try:
-#     db = Database('./data/tarefas.sqlite3')
-#     db.executar('''
-#     CREATE TABLE IF NOT EXISTS tarefas (
-#         id INTEGER PRIMARY KEY AUTOINCREMENT,
-#         titulo_tarefa TEXT NOT NULL,
-#         data_conclusao TEXT);
-#     ''')
-#     db.executar('INSERT INTO tarefas (titulo_tarefa, data_conclusao) VALUES (?, ?);', ('Estudar Python', '2026-02-02'))
-# except Exception as e:
-#     print(f"Erro ao criar tabela: {e}")
-# finally:
-#     db.close()
