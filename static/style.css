@@ -1,173 +1,72 @@
-
-* {
+/* Fundo e texto geral */
+html, body {
+    background-color: #121212 !important;
+    color: #e0e0e0 !important;
+    font-family: sans-serif;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, Helvetica, sans-serif;
 }
 
-body {
-    background: linear-gradient(135deg, #0547cd, #357abd);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-}
-
-h1 {
-    margin-bottom: 25px;
-    color: #ffffff;
-    text-align: center;
-}
-
-h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #ffffff;
-}
-
-form {
-    margin-bottom: 25px;
-    width: 100%;
-    max-width: 500px;
-}
-
-label {
-    font-weight: bold;
-    color: #444;
-}
-
-input[type="text"],
-input[type="date"] {
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    margin-bottom: 15px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-}
-
-input:focus {
-    outline: none;
-    border-color: #4a90e2;
-}
-
-button,
-.btn {
-    padding: 10px 15px;
-    border-radius: 6px;
-    border: none;
-    cursor: pointer;
-    text-decoration: none;
-    font-size: 14px;
-}
-
-.btn-primary {
-    background: #4a90e2;
-    color: white;
-}
-
-.btn-primary:hover {
-    background: #357abd;
-}
-
-.btn-secondary {
-    background: #9aa0a6;
-    color: white;
-}
-
-.btn-secondary:hover {
-    background: #7d8287;
-}
-
-.btn-danger {
-    background: #e74c3c;
-    color: white;
-    padding: 6px 10px;
+/* Formulários e inputs */
+form, input, select, textarea {
+    background-color: #1e1e1e !important;
+    color: #e0e0e0 !important;
+    border: 1px solid #444;
     border-radius: 5px;
-}
-
-.btn-danger:hover {
-    background: #c0392b;
-}
-
-ul {
-    list-style: none;
-    padding-left: 0;
+    padding: 8px;
     width: 100%;
-    max-width: 500px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: 2px solid #6200ea;
+}
+
+/* Cabeçalhos e títulos */
+h1, h2, h3, h4, h5, h6 {
+    color: #ffffff;
+}
+
+/* Lista de tarefas */
+ul {
+    padding: 0;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
 li {
-    background: #f9fafc;
-    margin-bottom: 10px;
+    background-color: #1e1e1e !important;
+    margin: 10px 0;
     padding: 12px;
-    border-radius: 6px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    border-radius: 5px;
+    list-style: none;
 }
 
-li a {
-    margin-left: 5px;
+/* Tarefas concluídas */
+.Completa {
+    text-decoration: line-through;
+    color: #888 !important;
 }
 
-.home-text {
-    text-align: center;
-    font-size: 22px;
-    color: #333;
-    margin-bottom: 20px;
+/* Botões */
+.btn, .btn-danger {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
     font-weight: bold;
+    transition: 0.2s;
 }
 
-.home-link {
-    text-decoration: none;
-    background: #4a90e2;
-    color: white;
-    padding: 12px 25px;
-    border-radius: 8px;
-    font-weight: bold;
-    transition: 0.3s;
-}
+.btn-primary { background-color: #6200ea; color: #fff; }
+.btn-completar { background-color: #03dac6; color: #000; }
+.btn-reabrir { background-color: #ffb300; color: #000; }
+.btn-danger { background-color: #cf6679; color: #fff; }
 
-.home-link:hover {
-    background: #357abd;
-}
+/* Links */
+a { color: inherit; text-decoration: none; }
+a:hover { text-decoration: underline; }
 
-.home {
-    text-align: center;
-    font-size: 22px;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 20px;
-}
-
-.title {
-    display: inline-block;
-    text-decoration: none;
-    background-color: #4a90e2;
-    color: white;
-    padding: 12px 25px;
-    border-radius: 8px;
-    font-weight: bold;
-    transition: 0.3s;
-    border: 2px solid #2c6bb2;
-}
-
-.title:hover {
-    background-color: #357abd;
-    border-color: #1e4a7a;
-}
-
-.content-border {
-    border: 2px solid #4a90e2;
-    border-radius: 12px;
-    padding: 30px 40px;
-    max-width: 350px;
-    margin: 40px auto;
-    text-align: center;
-    box-shadow: 0 4px 10px rgba(74, 144, 226, 0.2);
-    background-color: #fff;
-}
+/* Rodapé, caso tenha */
+footer { text-align: center; color: #888; padding: 10px; }

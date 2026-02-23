@@ -1,6 +1,6 @@
-from flask import Flask, render_template, request, redirect, url_for
-from models.tarefa import Tarefa
+from flask import Flask, redirect, render_template, request, url_for
 from models.database import init_db
+from models.tarefa import Tarefa
 
 app = Flask(__name__)
 
@@ -10,12 +10,11 @@ init_db()
 def home():
     return render_template('home.html', titulo='Home')
 
-@app.route('/agenda', methods=['GET', 'POST'])
+@app.route('/agenda', methods=['GET','POST'])
 def agenda():
     tarefas = None
 
-
-    if request.method == 'POST': 
+    if request.method == 'POST':
         titulo_tarefa = request.form['titulo-tarefa']
         data_conclusao = request.form['data-conclusao']
         tarefa = Tarefa(titulo_tarefa, data_conclusao)
@@ -26,26 +25,37 @@ def agenda():
 
 @app.route('/delete/<int:idTarefa>')
 def delete(idTarefa):
-    tarefas = Tarefa.id(idTarefa) 
-    tarefas.excluir_tarefa()
-    # return render_template("agenda.html", titulo="Agenda", tarefas=tarefas)
+    tarefa = Tarefa.id(idTarefa)
+    tarefa.excluir_tarefa()
+    # return render_template('agenda.html', titulo="Agenda",
+    # tarefa=tarefas)
     return redirect(url_for('agenda'))
 
-@app.route('/update/<int:idTarefa>', methods=['GET', 'POST'])
+@app.route('/update/<int:idTarefa>', methods=['GET', 'POST']) 
 def update(idTarefa):
     tarefas = None
 
     if request.method == 'POST':
-        titulo = request.form['titulo-tarefa']
-        data = request.form['data-conclusao']
-        tarefa = Tarefa(titulo, data, idTarefa)
-        tarefa.atualizar_tarefa()
-        return redirect(url_for('agenda')) # early return
+        titulo_tarefa = request.form['titulo-tarefa']
+        data_conclusao = request.form['data-conclusao']
+        tarefa = Tarefa(titulo_tarefa, data_conclusao, idTarefa)
+        tarefa.atualizar()
 
     tarefas = Tarefa.obter_tarefas()
-    tarefa_selecionada = Tarefa.id(idTarefa) # seleção da tarefa que será editada
+    tarefa_selecionada = Tarefa.id(idTarefa)
+    return render_template('agenda.html', titulo=f'Editando a tarefa ID: {idTarefa}',tarefa_selecionada=tarefa_selecionada, tarefas=tarefas )
 
-    return render_template('agenda.html', titulo=f'Editando a tarefa ID: {idTarefa}', tarefas=tarefas, tarefa_selecionada=tarefa_selecionada)
+@app.route('/completar/<int:idTarefa>', methods=['GET', 'POST'])
+def completar(idTarefa):
+    tarefa = Tarefa.id(idTarefa)
+    tarefa.completar_tarefa()
+    return redirect(url_for('agenda'))
+
+@app.route('/reabrir/<int:idTarefa>', methods=['GET', 'POST'])
+def reabrir(idTarefa):
+    tarefa = Tarefa.id(idTarefa)
+    tarefa.reabrir_tarefa()
+    return redirect(url_for('agenda'))
 
 @app.route('/ola')
 def ola_mundo():
