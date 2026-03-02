@@ -11,7 +11,7 @@ html, body {
 form, input, select, textarea {
     background-color: #1e1e1e !important;
     color: #e0e0e0 !important;
-    border: 1px solid #444;
+    border: 1px solid #ffffff;
     border-radius: 5px;
     padding: 8px;
     width: 100%;
@@ -36,7 +36,7 @@ ul {
 }
 
 li {
-    background-color: #1e1e1e !important;
+    background-color: #7d7d7d !important;
     margin: 10px 0;
     padding: 12px;
     border-radius: 5px;
@@ -46,7 +46,7 @@ li {
 /* Tarefas concluídas */
 .Completa {
     text-decoration: line-through;
-    color: #888 !important;
+    color: #fffdfd !important;
 }
 
 /* Botões */
@@ -60,8 +60,8 @@ li {
 }
 
 .btn-primary { background-color: #6200ea; color: #fff; }
-.btn-completar { background-color: #03dac6; color: #000; }
-.btn-reabrir { background-color: #ffb300; color: #000; }
+.btn-completar { background-color: #03dac6; color: #ffffff; }
+.btn-reabrir { background-color: #ffb300; color: #ffffff; }
 .btn-danger { background-color: #cf6679; color: #fff; }
 
 /* Links */

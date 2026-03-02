@@ -6,11 +6,8 @@ app = Flask(__name__)
 
 init_db()
 
-@app.route('/')
-def home():
-    return render_template('home.html', titulo='Home')
 
-@app.route('/agenda', methods=['GET','POST'])
+@app.route('/', methods=['GET','POST'])
 def agenda():
     tarefas = None
 
@@ -23,13 +20,13 @@ def agenda():
     tarefas = Tarefa.obter_tarefas()
     return render_template('agenda.html', titulo='Agenda', tarefas=tarefas)
 
+
 @app.route('/delete/<int:idTarefa>')
 def delete(idTarefa):
     tarefa = Tarefa.id(idTarefa)
     tarefa.excluir_tarefa()
-    # return render_template('agenda.html', titulo="Agenda",
-    # tarefa=tarefas)
     return redirect(url_for('agenda'))
+
 
 @app.route('/update/<int:idTarefa>', methods=['GET', 'POST']) 
 def update(idTarefa):
@@ -43,7 +40,13 @@ def update(idTarefa):
 
     tarefas = Tarefa.obter_tarefas()
     tarefa_selecionada = Tarefa.id(idTarefa)
-    return render_template('agenda.html', titulo=f'Editando a tarefa ID: {idTarefa}',tarefa_selecionada=tarefa_selecionada, tarefas=tarefas )
+    return render_template(
+        'agenda.html', 
+        titulo=f'Editando a tarefa ID: {idTarefa}',
+        tarefa_selecionada=tarefa_selecionada,
+        tarefas=tarefas 
+    )
+
 
 @app.route('/completar/<int:idTarefa>', methods=['GET', 'POST'])
 def completar(idTarefa):
@@ -51,12 +54,9 @@ def completar(idTarefa):
     tarefa.completar_tarefa()
     return redirect(url_for('agenda'))
 
+
 @app.route('/reabrir/<int:idTarefa>', methods=['GET', 'POST'])
 def reabrir(idTarefa):
     tarefa = Tarefa.id(idTarefa)
     tarefa.reabrir_tarefa()
     return redirect(url_for('agenda'))
-
-@app.route('/ola')
-def ola_mundo():
-    return "Olá, Mundo!"

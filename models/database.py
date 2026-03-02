@@ -5,10 +5,16 @@ from dotenv import load_dotenv
 import traceback
 import os
 
-load_dotenv() # Procura um arquivo .env com variáveis
+load_dotenv()
 DB_PATH = os.getenv('DATABASE', './data/tarefas.sqlite3')
 
 def init_db(db_name: str = DB_PATH) -> None:
+
+    data_dir = os.path.join(os.getcwd(), "data")
+
+    if not os.path.exists(data_dir):
+        os.makedirs(data_dir, exist_ok=True)
+
     with connect(db_name) as conn:
         conn.execute("""
         CREATE TABLE IF NOT EXISTS tarefas (
@@ -21,7 +27,8 @@ def init_db(db_name: str = DB_PATH) -> None:
 
 class Database: 
     """
-        Classe que gerencia conexões e oprerações com um banco de dados SQLite. Utiliza o protocolo de gerenciamento de contexto para garantit que a conexão seja encerrada corretamente.
+        Classe que gerencia conexões e oprerações com um banco de dados SQLite. Utiliza o protocolo de gerenciamento de contexto para garantit que a 
+        conexão seja encerrada corretamente.
     """
     def __init__(self, db_name: str = DB_PATH) -> None :
         self.connection: Connection = connect(db_name)
